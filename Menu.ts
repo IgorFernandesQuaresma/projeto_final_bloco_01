@@ -1,7 +1,18 @@
+import { Produto } from "./Model/Produto";
+import { ProdutoExtend } from "./Model/ProdutoExtend";
+import { ProdutoController } from "./Controller/ProdutoController";
+
 const readline = require("readline-sync")
 export function main() {
 
-    let opcao:Number ;
+    let opcao, id, preco:number ;
+    let nome, descricao: string;
+    let produto: ProdutoController = new ProdutoController;
+    let pr1: ProdutoExtend = new ProdutoExtend(produto.gerarId(), "Celular", "Celular marca abc 256GB" , 3000);
+    let pr2: ProdutoExtend = new ProdutoExtend(produto.gerarId(), "Celular", "Celular marca abc 256GB" , 3000)
+    produto.CriarProduto(pr1)
+    produto.CriarProduto(pr2) 
+    
 
         while (true) {
 console.log("*****************************************************");
@@ -28,29 +39,62 @@ opcao = readline.questionInt ("");
 switch(opcao) {
     case 1:
         console.log("Vamos criar seu produto.");
+
+       
+        nome = readline.question("Digite o nome do produto: ")
+
+        descricao = readline.question("Digite a descricao do produto: ")
+        
+        preco = readline.questionFloat("Digite o Preco do Produto: ").toFixed(2)
+
+
+        produto.CriarProduto(new ProdutoExtend(produto.gerarId(), nome, descricao, preco))
+        
     aguardar()    
     break
 
     case 2:
+
         console.log("Vamos listar todos os produtos.");
+        produto.listarTodos()
         aguardar()  
         break;
 
-    case 3:  
+    case 3: 
+
     console.log("Vamos buscar seu produto por ID.");
+    id = readline.questionInt("Digite o numero da ID do produto: ")
+    produto.consultarProdutoporId(id) 
         aguardar()   
         break;
 
-        case 4:
+    case 4:
             console.log("Vamos atualizar o produto selecionado.");
+            id = readline.questionInt("Digite o ID do produto: ");
+        
+        let buscaProduto = produto.buscarNoArray(id);
+    
+        if (buscaProduto != null) {
+            id = buscaProduto.id
+            nome = readline.question("Digite um novo nome: ")
+            descricao = readline.question("Digite uma nova descricao: ")
+            preco = readline.questionFloat("Digite um novo preco: ").toFixed(2)
+            
+
+            produto.atualizar(new ProdutoExtend(id, nome, descricao, preco));
+
+        } else { 
+            console.log(`Não existe nenhum produto com o ID ${id}`);
+        }
+    
     
         aguardar()      
         break;
-        
-     
 
     case 5:
         console.log("Vamos apagar o produto selecionado.");
+        id = readline.questionInt("Digite o ID do produto que quer deletar: ")
+        produto.deletar(id)
     aguardar()      
     break;
 
