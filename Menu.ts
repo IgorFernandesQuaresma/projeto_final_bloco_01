@@ -17,7 +17,7 @@ export function main() {
         while (true) {
 console.log("*****************************************************");
 console.log("                                                     ");
-console.log("               Medicamentos                          ");
+console.log("                    Produtos                         ");
 console.log("                                                     ");
 console.log("*****************************************************");
 console.log("                                                     ");
